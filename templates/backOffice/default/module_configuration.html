@@ -1,0 +1,37 @@
+<div class="general-block-decorator">
+    <div class="row">
+
+        <div class="col-md-12 title title-without-tabs">
+            {intl d='googletagmanager.bo.default' l='Edit your Google Tag Manager Configuration.'}
+        </div>
+
+        <div class="form-container">
+            <div class="col-md-12">
+
+                {form name="googletagmanager.configuration.form"}
+                <form method="POST" id="googletagmanager-form"  action="{url path="/admin/module/googletagmanager/save"}" {form_enctype} class="clearfix">
+
+                {form_hidden_fields}
+
+                {if $form_error}
+                <div class="alert alert-danger">{$form_error_message}</div>
+                {/if}
+
+                {render_form_field field="success_url" value={url path="/admin/module/googletagmanager"}}
+                {form_field field='trackingcode'}
+                <div class="form-group {if $error}has-error{/if}">
+                    <label for="{$label_attr.for}" class="control-label">{$label} : </label>
+                    <textarea id="{$label_attr.for}" name="{$name}" class="form-control" style="height: 200px;" title="{$label}">{$value}</textarea>
+                </div>
+                {/form_field}
+
+                <button type="submit" id="googletagmanager-save" name="googletagmanager_save" value="save" class="form-submit-button btn btn-sm btn-default" title="{intl d='googletagmanager.bo.default' l='Save'}">{intl d='googletagmanager.bo.default' l='Save'}</button>
+                </form>
+                {/form}
+
+            </div>
+
+        </div>
+
+    </div>
+</div>
