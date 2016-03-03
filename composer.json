@@ -1,5 +1,5 @@
 {
-  "name": "your-vendor/google-tag-manager-module",
+  "name": "thelia/google-tag-manager-module",
   "license": "LGPL-3.0+",
   "type": "thelia-module",
   "require": {
