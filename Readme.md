@@ -1,6 +1,6 @@
 # Google Tag Manager
 
-Add a short description here. You can also add a screenshot if needed.
+This module is made to use the google tag manager tool.
 
 ## Installation
 
@@ -19,37 +19,5 @@ composer require your-vendor/google-tag-manager-module:~1.0
 
 ## Usage
 
-Explain here how to use your module, how to configure it, etc.
+You just need to configure the tracking code from your google tag manager account.
 
-## Hook
-
-If your module use one or more hook, fill this part. Explain which hooks are used.
-
-
-## Loop
-
-If your module declare one or more loop, describe them here like this :
-
-[loop name]
-
-### Input arguments
-
-|Argument |Description |
-|---      |--- |
-|**arg1** | describe arg1 with an exemple. |
-|**arg2** | describe arg2 with an exemple. |
-
-### Output arguments
-
-|Variable   |Description |
-|---        |--- |
-|$VAR1    | describe $VAR1 variable |
-|$VAR2    | describe $VAR2 variable |
-
-### Exemple
-
-Add a complete exemple of your loop
-
-## Other ?
-
-If you have other think to put, feel free to complete your readme as you want.
