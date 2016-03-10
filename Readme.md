@@ -14,7 +14,7 @@ This module is made to use the google tag manager tool.
 Add it in your main thelia composer.json file
 
 ```
-composer require your-vendor/google-tag-manager-module:~1.0
+composer require thelia/google-tag-manager-module:~1.0
 ```
 
 ## Usage
