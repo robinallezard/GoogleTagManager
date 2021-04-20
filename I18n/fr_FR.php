@@ -2,5 +2,5 @@
 
 return array(
     'Syntax error' => 'Erreur de syntaxe',
-    'Tracking Code' => 'Code de suivi',
+    'Google Tag Manager Id' => 'Identifiant unique Google Tag Manager',
 );

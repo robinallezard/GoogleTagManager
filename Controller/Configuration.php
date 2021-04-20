@@ -38,7 +38,7 @@ class Configuration extends BaseAdminController
             $vform = $this->validateForm($form);
             $data = $vform->getData();
 
-            GoogleTagManager::setConfigValue('googletagmanager_trackingcode',$data['trackingcode']);
+            GoogleTagManager::setConfigValue('googletagmanager_gtmId',$data['gtmId']);
         } catch (\Exception $e) {
             $this->setupFormErrorContext(
                 $this->getTranslator()->trans("Syntax error"),
