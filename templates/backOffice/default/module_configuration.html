@@ -18,10 +18,10 @@
                 {/if}
 
                 {render_form_field field="success_url" value={url path="/admin/module/googletagmanager"}}
-                {form_field field='trackingcode'}
+                {form_field field='gtmId'}
                 <div class="form-group {if $error}has-error{/if}">
                     <label for="{$label_attr.for}" class="control-label">{$label} : </label>
-                    <textarea id="{$label_attr.for}" name="{$name}" class="form-control" style="height: 200px;" title="{$label}">{$value}</textarea>
+                    <input type="text" id="{$label_attr.for}" name="{$name}" class="form-control" title="{$label}" value="{$value}" />
                 </div>
                 {/form_field}
 

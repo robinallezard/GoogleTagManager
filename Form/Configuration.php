@@ -28,15 +28,15 @@ class Configuration extends BaseForm
     {
         $form = $this->formBuilder;
 
-        $value = GoogleTagManager::getConfigValue('googletagmanager_trackingcode');
+        $value = GoogleTagManager::getConfigValue('googletagmanager_gtmId');
         $form->add(
-            "trackingcode",
+            "gtmId",
             "text",
             array(
                 'data'  => $value,
-                'label' => Translator::getInstance()->trans("Tracking Code",[] ,GoogleTagManager::DOMAIN_NAME),
+                'label' => Translator::getInstance()->trans("Google Tag Manager Id",[] ,GoogleTagManager::DOMAIN_NAME),
                 'label_attr' => array(
-                    'for' => "trackingcode"
+                    'for' => "gtmId"
                 ),
             )
         );
