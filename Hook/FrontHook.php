@@ -16,6 +16,7 @@ namespace GoogleTagManager\Hook;
 use GoogleTagManager\GoogleTagManager;
 use Thelia\Core\Event\Hook\HookRenderEvent;
 use Thelia\Core\Hook\BaseHook;
+use Thelia\Model\Base\LangQuery;
 use Thelia\Model\ConfigQuery;
 
 /**
@@ -26,7 +27,8 @@ use Thelia\Model\ConfigQuery;
 class FrontHook extends BaseHook
 {
     public function onMainHeadTop(HookRenderEvent $event){
-        $value = GoogleTagManager::getConfigValue('googletagmanager_gtmId');
+        $lang = $this->getLang();
+        $value = GoogleTagManager::getConfigValue('googletagmanager_gtmId', null, $lang->getLocale());
         if ("" != $value){
             $event->add(
                 "<!-- Google Tag Manager -->".
@@ -40,7 +42,8 @@ class FrontHook extends BaseHook
         }
     }
     public function onMainBodyTop(HookRenderEvent $event){
-        $value = GoogleTagManager::getConfigValue('googletagmanager_gtmId');
+        $lang = $this->getLang();
+        $value = GoogleTagManager::getConfigValue('googletagmanager_gtmId', null, $lang->getLocale());
         if ("" != $value){
             $event->add("<!-- Google Tag Manager (noscript) -->".
                 "<noscript><iframe src='https://www.googletagmanager.com/ns.html?id=".$value."' ".
@@ -48,5 +51,14 @@ class FrontHook extends BaseHook
                 "<!-- End Google Tag Manager (noscript) -->"
             );
         }
+    }
+
+    protected function getLang()
+    {
+        $lang = $this->getRequest()->getSession()->get("thelia.current.lang");
+        if (null === $lang){
+            $lang = LangQuery::create()->filterByByDefault(1)->findOne();
+        }
+        return $lang;
     }
 }
