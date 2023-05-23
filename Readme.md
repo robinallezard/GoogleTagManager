@@ -18,3 +18,13 @@ This will generate both the head script and the body no-script tags and insert t
 in the ```main.body-top``` hooks. \
 If these hooks are not present in your template, you'll need to add them beforehand.
 
+To track products added to the cart you need to implement this js event on the "Add to cart" buttons.
+```js 
+const event = new CustomEvent("addPseToCart", {
+    detail: {
+          pse: pseId,
+          quantity
+    },
+ });
+ document.dispatchEvent(event);
+```
