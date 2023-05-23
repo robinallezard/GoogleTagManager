@@ -21,6 +21,9 @@
         </author>
     </authors>
     <type>classic</type>
+    <required>
+        <module version=">=2.0.0">ShortCode</module>
+    </required>
     <thelia>2.5.0</thelia>
     <stability>prod</stability>
 </module>

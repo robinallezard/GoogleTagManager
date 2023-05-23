@@ -3,6 +3,8 @@
 namespace GoogleTagManager\Service;
 
 use Symfony\Component\HttpFoundation\RequestStack;
+use Thelia\Core\HttpFoundation\Session\Session;
+use Thelia\Model\Base\CurrencyQuery;
 use Thelia\Model\BrandQuery;
 use Thelia\Model\CartItem;
 use Thelia\Model\Category;
@@ -158,8 +160,7 @@ class GoogleTagService
         /** @var Lang $lang */
         $lang = $session->get('thelia.current.lang');
 
-        /** @var Currency $currency */
-        $currency = $session->get('thelia.current.currency');
+        $currency = $session->getCurrency() ?: CurrencyQuery::create()->findOneByByDefault(1);
 
         $items = [];
 
@@ -199,10 +200,10 @@ class GoogleTagService
             return null;
         }
 
+        /** @var Session $session */
         $session = $this->requestStack->getSession();
 
-        /** @var Currency $currency */
-        $currency = $session->get('thelia.current.currency');
+        $currency = $session->getCurrency() ?: CurrencyQuery::create()->findOneByByDefault(1);
 
         $invoiceAddress = $order->getOrderAddressRelatedByInvoiceOrderAddressId();
         $address = $invoiceAddress->getAddress1() .
@@ -241,8 +242,7 @@ class GoogleTagService
         /** @var Lang $lang */
         $lang = $session->get('thelia.current.lang');
 
-        /** @var Currency $currency */
-        $currency = $session->get('thelia.current.currency');
+        $currency = $session->getCurrency() ?: CurrencyQuery::create()->findOneByByDefault(1);
 
         $items = [];
 
