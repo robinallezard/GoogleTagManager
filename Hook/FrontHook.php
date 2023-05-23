@@ -34,7 +34,7 @@ class FrontHook extends BaseHook
 
     public function onMainHeadTop(HookRenderEvent $event){
         $lang = $this->getLang();
-        $gtmId = GoogleTagManager::getConfigValue('googletagmanager_gtmId', null, $lang->getLocale());
+        $gtmId = GoogleTagManager::getConfigValue('googletagmanager_gtmId');
         if ("" != $gtmId){
             $view = $this->request->get('_view');
 
@@ -76,7 +76,7 @@ class FrontHook extends BaseHook
     public function onMainBodyTop(HookRenderEvent $event)
     {
         $lang = $this->getLang();
-        $value = GoogleTagManager::getConfigValue('googletagmanager_gtmId', null, $lang->getLocale());
+        $value = GoogleTagManager::getConfigValue('googletagmanager_gtmId');
         if ("" != $value){
             $event->add("<!-- Google Tag Manager (noscript) -->".
                 "<noscript><iframe src='https://www.googletagmanager.com/ns.html?id=".$value."' ".

@@ -30,7 +30,7 @@ class Configuration extends BaseForm
         $form = $this->formBuilder;
 
         $lang = $this->getRequest()->getSession()->get('thelia.admin.edition.lang');
-        $value = GoogleTagManager::getConfigValue('googletagmanager_gtmId', null, $lang->getLocale());
+        $value = GoogleTagManager::getConfigValue('googletagmanager_gtmId');
         $form->add(
             "gtmId",
             TextType::class,

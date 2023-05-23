@@ -41,7 +41,7 @@ class Configuration extends BaseAdminController
             $data = $vform->getData();
             $lang = $session->get('thelia.admin.edition.lang');
 
-            GoogleTagManager::setConfigValue('googletagmanager_gtmId', $data['gtmId'], $lang->getlocale());
+            GoogleTagManager::setConfigValue('googletagmanager_gtmId', $data['gtmId']);
         } catch (\Exception $e) {
             $this->setupFormErrorContext(
                 Translator::getInstance()->trans("Syntax error"),
