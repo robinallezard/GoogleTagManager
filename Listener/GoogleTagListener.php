@@ -7,41 +7,31 @@ use GoogleTagManager\Service\GoogleTagService;
 use ShortCode\Event\ShortCodeEvent;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\RequestStack;
-use Symfony\Component\Security\Http\Event\LoginSuccessEvent;
-use Symfony\Contracts\EventDispatcher\Event;
-use Thelia\Core\Event\ActionEvent;
 use Thelia\Core\Event\Customer\CustomerCreateOrUpdateEvent;
 use Thelia\Core\Event\Customer\CustomerLoginEvent;
 use Thelia\Core\Event\Loop\LoopExtendsParseResultsEvent;
 use Thelia\Core\Event\TheliaEvents;
-use Thelia\Core\HttpFoundation\Session\Session;
-use Thelia\Model\Category;
-use Thelia\Model\CategoryQuery;
-use Thelia\Model\ConfigQuery;
-use Thelia\Model\Currency;
-use Thelia\Model\Lang;
-use Thelia\Model\Product;
-use Thelia\Model\ProductQuery;
-use Thelia\TaxEngine\Calculator;
 
 class GoogleTagListener implements EventSubscriberInterface
 {
     public function __construct(
         private GoogleTagService $googleTagService,
-        private RequestStack $requestStack
-    ) {}
+        private RequestStack     $requestStack
+    )
+    {
+    }
 
     public static function getSubscribedEvents()
     {
         return [
             GoogleTagManager::GOOGLE_TAG_VIEW_LIST_ITEM => ['getViewListItem', 128],
             GoogleTagManager::GOOGLE_TAG_VIEW_ITEM => ['getViewItem', 128],
+            TheliaEvents::CUSTOMER_LOGIN => ['triggerLoginEvent', 128],
+            TheliaEvents::CUSTOMER_CREATEACCOUNT => ['triggerRegisterEvent', 128],
             TheliaEvents::getLoopExtendsEvent(
                 TheliaEvents::LOOP_EXTENDS_PARSE_RESULTS,
                 'product'
-            ) => ['trackProducts', 128],
-            TheliaEvents::CUSTOMER_LOGIN => ['triggerLoginEvent', 128],
-            TheliaEvents::CUSTOMER_CREATEACCOUNT => ['triggerRegisterEvent', 128],
+            ) => ['trackProducts', 128]
         ];
     }
 
@@ -91,12 +81,12 @@ class GoogleTagListener implements EventSubscriberInterface
         $request = $this->requestStack->getCurrentRequest();
         $session = $request->getSession();
 
-        if (!in_array($request->get('_view'), ['product', 'category', 'brand', 'search'])){
+        if (!in_array($request->get('_view'), ['product', 'category', 'brand', 'search'])) {
             $session->set(GoogleTagManager::GOOGLE_TAG_VIEW_LIST_ITEM, null);
             return;
         }
 
-        foreach ($event->getLoopResult() as $product){
+        foreach ($event->getLoopResult() as $product) {
             $products[] = $product->get('ID');
         }
 

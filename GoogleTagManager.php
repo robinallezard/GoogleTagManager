@@ -22,6 +22,7 @@ class GoogleTagManager extends BaseModule
     /** @var string */
     const DOMAIN_NAME = 'googletagmanager';
 
+    const GOOGLE_TAG_VIEW_CART = 'google_tag_view_cart';
     const GOOGLE_TAG_VIEW_ITEM = 'google_tag_view_item';
     const GOOGLE_TAG_VIEW_LIST_ITEM = 'google_tag_view_list_item';
     const GOOGLE_TAG_TRIGGER_LOGIN = 'google_tag_trigger_login';
