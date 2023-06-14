@@ -243,7 +243,7 @@ class GoogleTagService
         ]);
     }
 
-    public function getPurchaseData($orderId)
+    public function getPurchaseData(int $orderId)
     {
         $order = OrderQuery::create()->findPk($orderId);
 

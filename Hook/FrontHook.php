@@ -84,9 +84,9 @@ class FrontHook extends BaseHook
                 ]));
             }
 
-            if ($view === 'order-placed') {
+            if ($view === 'order-placed' && $orderId = $request->get('order_id')) {
                 $event->add($this->render('datalayer/thelia-page-view.html', [
-                    'data' => $this->googleTagService->getPurchaseData($session->get('order_id'))
+                    'data' => $this->googleTagService->getPurchaseData($orderId)
                 ]));
             }
 
