@@ -117,7 +117,7 @@ class GoogleTagService
         $item = [
             'item_id' => $product->getId(),
             'item_name' => $product->getRef(),
-            'item_brand' => null !== $brand ? $brand->setLocale($lang->getLocale())->getTitle() : ConfigQuery::read('store_name'),
+            'item_brand' => htmlspecialchars(null !== $brand ? $brand->setLocale($lang->getLocale())->getTitle() : ConfigQuery::read('store_name')),
             'affiliation' => ConfigQuery::read('store_name'),
             'price' => round($productPrice, 2),
             'currency' => $currency->getCode(),
@@ -134,7 +134,7 @@ class GoogleTagService
             if ($index === 0) {
                 $categoryIndex = 'item_category';
             }
-            $item[$categoryIndex] = $categoryTitle;
+            $item[$categoryIndex] = htmlspecialchars($categoryTitle);
         }
 
         if (!$isDefaultPse) {
