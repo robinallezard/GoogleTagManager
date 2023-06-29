@@ -8,6 +8,9 @@
         if (window['google_tag_manager']) {
             e.preventDefault();
             targetUrl = e.currentTarget.href;
+            if (undefined === targetUrl) {
+                targetUrl = e.currentTarget.getElementsByTagName('a')[0].href;
+            }
 
             const response = await fetch('{url path='/googletagmanager/getItem'}', {
                 method: "POST",
