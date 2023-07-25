@@ -118,7 +118,7 @@ class GoogleTagService
             'item_id' => $product->getId(),
             'item_name' => htmlspecialchars($product->getTitle()),
             'item_brand' => htmlspecialchars(null !== $brand ? $brand->setLocale($lang->getLocale())->getTitle() : ConfigQuery::read('store_name')),
-            'affiliation' => ConfigQuery::read('store_name'),
+            'affiliation' => htmlspecialchars(ConfigQuery::read('store_name')),
             'price' => round($productPrice, 2),
             'currency' => $currency->getCode(),
             'quantity' => $quantity
@@ -142,7 +142,7 @@ class GoogleTagService
             foreach ($combinations = $pse->getAttributeCombinations() as $combinationIndex => $attributeCombination) {
                 $attribute = $attributeCombination->getAttribute()->setLocale($lang->getLocale());
                 $attributeAv = $attributeCombination->getAttributeAv()->setLocale($lang->getLocale());
-                $attributes .= $attribute->getTitle() . ': ' . $attributeAv->getTitle();
+                $attributes .= htmlspecialchars($attribute->getTitle() . ': ' . $attributeAv->getTitle());
 
                 if ($combinationIndex + 1 !== count($combinations->getData())) {
                     $attributes .= ', ';
@@ -269,7 +269,7 @@ class GoogleTagService
                 'tax' => $tax,
                 'shipping' => $order->getPostage(),
                 'currency' => $currency->getCode(),
-                'affiliation' => ConfigQuery::read('store_name'),
+                'affiliation' => htmlspecialchars(ConfigQuery::read('store_name')),
                 'items' => $this->getOrderProductItems($order, $invoiceAddress->getCountry())
             ],
             'user_purchase' => [
@@ -327,7 +327,7 @@ class GoogleTagService
             $categories = $this->getCategories($parent, $locale, $categories);
         }
 
-        $categories[] = $category->setLocale($locale)->getTitle();
+        $categories[] = htmlspecialchars($category->setLocale($locale)->getTitle());
 
         return $categories;
     }
@@ -387,7 +387,7 @@ class GoogleTagService
             default:
                 return null;
         }
-        return $pageEntity->setLocale($this->requestStack->getSession()->getLang()->getLocale())->getTitle();
+        return htmlspecialchars($pageEntity->setLocale($this->requestStack->getSession()->getLang()->getLocale())->getTitle());
     }
 
     protected function getPageProductRef($view)
