@@ -6,6 +6,7 @@ use GoogleTagManager\Service\GoogleTagService;
 use Symfony\Component\HttpFoundation\Request;
 use Thelia\Controller\Front\BaseFrontController;
 use Thelia\Core\HttpFoundation\JsonResponse;
+use Thelia\Model\Base\CurrencyQuery;
 use Thelia\Model\Base\RewritingUrlQuery;
 use Thelia\Model\Currency;
 use Thelia\Model\Lang;
@@ -36,7 +37,7 @@ class ProductDataController extends BaseFrontController
         $lang = $session->get('thelia.current.lang');
 
         /** @var Currency $currency */
-        $currency = $session->get('thelia.current.currency');
+        $currency = $session->get('thelia.current.currency') ?: CurrencyQuery::create()->filterByByDefault(1)->findOne();
 
 
         if (null !== $rewriteUrl) {
@@ -68,7 +69,7 @@ class ProductDataController extends BaseFrontController
         $lang = $session->get('thelia.current.lang');
 
         /** @var Currency $currency */
-        $currency = $session->get('thelia.current.currency');
+        $currency = $session->get('thelia.current.currency') ?: CurrencyQuery::create()->filterByByDefault(1)->findOne();
 
         $result = $googleTagService->getProductItem($product, $lang, $currency, $pse, $quantity);
 
