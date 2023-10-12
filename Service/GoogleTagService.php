@@ -211,7 +211,7 @@ class GoogleTagService
 
         return json_encode([
             'event' => 'view_cart',
-            'ecomerce' => [
+            'ecommerce' => [
                 'currency' => $cart->getCurrency()->getCode(),
                 'value' => $cart->getTaxedAmount($addressCountry),
                 'items' => $items
@@ -238,7 +238,7 @@ class GoogleTagService
 
         return json_encode([
             'event' => 'begin_checkout',
-            'ecomerce' => [
+            'ecommerce' => [
                 'currency' => $cart->getCurrency()->getCode(),
                 'value' => $cart->getTaxedAmount($addressCountry),
                 'coupon' => $coupons,
