@@ -88,6 +88,15 @@ class FrontHook extends BaseHook
                 $event->add($this->render('datalayer/thelia-page-view.html', [
                     'data' => $this->googleTagService->getPurchaseData($orderId)
                 ]));
+
+                $event->add($this->render('datalayer/thelia-page-view.html', [
+                    'data' => $this->googleTagService->getPaymentInfo($orderId)
+                ]));
+
+                $event->add($this->render('datalayer/thelia-page-view.html', [
+                    'data' => $this->googleTagService->getShippingInfo($orderId)
+                ]));
+
             }
 
             $event->add(

@@ -211,9 +211,11 @@ class GoogleTagService
 
         return json_encode([
             'event' => 'view_cart',
-            'currency' => $cart->getCurrency()->getCode(),
-            'value' => $cart->getTaxedAmount($addressCountry),
-            'items' => $items
+            'ecomerce' => [
+                'currency' => $cart->getCurrency()->getCode(),
+                'value' => $cart->getTaxedAmount($addressCountry),
+                'items' => $items
+            ]
         ]);
     }
 
@@ -236,10 +238,70 @@ class GoogleTagService
 
         return json_encode([
             'event' => 'begin_checkout',
-            'currency' => $cart->getCurrency()->getCode(),
-            'value' => $cart->getTaxedAmount($addressCountry),
-            'coupon' => $coupons,
-            'items' => $items
+            'ecomerce' => [
+                'currency' => $cart->getCurrency()->getCode(),
+                'value' => $cart->getTaxedAmount($addressCountry),
+                'coupon' => $coupons,
+                'items' => $items
+            ]
+        ]);
+    }
+
+    public function getPaymentInfo(int $orderId)
+    {
+        $order = OrderQuery::create()->findPk($orderId);
+
+        if (null === $order) {
+            return null;
+        }
+
+        /** @var Session $session */
+        $session = $this->requestStack->getSession();
+
+        $currency = $session->getCurrency() ?: CurrencyQuery::create()->findOneByByDefault(1);
+
+        $coupons = implode(',',$session->getConsumedCoupons());
+
+        $paymentType = $order->getPaymentModuleInstance()->getCode();
+
+        return json_encode([
+            'event' => 'add_payment_info',
+            'ecommerce' => [
+                'currency' => $currency?->getCode(),
+                'value' => $order->getTotalAmount($tax, false),
+                'coupon' => $coupons,
+                'payment_type' => $paymentType,
+                'items' => $this->getOrderProductItems($order, $order->getOrderAddressRelatedByInvoiceOrderAddressId()->getCountry())
+            ]
+        ]);
+    }
+
+    public function getShippingInfo(int $orderId)
+    {
+        $order = OrderQuery::create()->findPk($orderId);
+
+        if (null === $order) {
+            return null;
+        }
+
+        /** @var Session $session */
+        $session = $this->requestStack->getSession();
+
+        $currency = $session->getCurrency() ?: CurrencyQuery::create()->findOneByByDefault(1);
+
+        $coupons = implode(',',$session->getConsumedCoupons());
+
+        $shippingType = $order->getDeliveryModuleInstance()->getCode();
+
+        return json_encode([
+            'event' => 'add_shipping_info',
+            'ecommerce' => [
+                'currency' => $currency?->getCode(),
+                'value' => $order->getTotalAmount($tax, false),
+                'coupon' => $coupons,
+                'shipping_tier' => $shippingType,
+                'items' => $this->getOrderProductItems($order, $order->getOrderAddressRelatedByInvoiceOrderAddressId()->getCountry())
+            ]
         ]);
     }
 
