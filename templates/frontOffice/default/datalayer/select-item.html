@@ -1,7 +1,7 @@
 <script>
     document.addEventListener("DOMContentLoaded", function(e) {
 
-    const products = document.getElementsByClassName("SingleProduct");
+    const products = document.querySelectorAll("a.SingleProduct, .SingleProduct a");
 
     let processLinkClick = async function(e) {
         let targetUrl;
