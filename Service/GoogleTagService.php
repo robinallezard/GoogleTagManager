@@ -2,6 +2,7 @@
 
 namespace GoogleTagManager\Service;
 
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Thelia\Core\HttpFoundation\Session\Session;
 use Thelia\Model\Base\CartQuery;
@@ -32,6 +33,7 @@ class GoogleTagService
     public function __construct(
         private RequestStack $requestStack,
         private TaxEngine $taxEngine,
+        private EventDispatcherInterface $dispatcher
     )
     {
     }
@@ -487,7 +489,7 @@ class GoogleTagService
         switch ($view) {
             case 'cart' :
             case 'order-delivery' :
-                return $this->requestStack->getSession()->getSessionCart()->getTaxedAmount($this->taxEngine->getDeliveryCountry());
+                return $this->requestStack->getSession()->getSessionCart($this->dispatcher)->getTaxedAmount($this->taxEngine->getDeliveryCountry());
             case 'order-placed' :
                 $order = OrderQuery::create()->findPk($this->requestStack->getCurrentRequest()->get('order_id'));
                 return $order->getTotalAmount($tax, false) - $tax;
